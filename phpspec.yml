@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: Coverart
+        psr4_prefix: Coverart
+        src_path: app
