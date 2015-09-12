@@ -14,9 +14,9 @@ class MacroProvider extends ServiceProvider
      */
     public function boot()
     {
-        FormFacade::macro('openGroup', function ($fieldName, $errors)
+        FormFacade::macro('openGroup', function ($fieldName, $errors, $extraClasses = '')
         {
-            return '<div class="form-group'.($errors->has($fieldName) ? ' has-error' : '').'">';
+            return '<div class="form-group'.($errors->has($fieldName) ? ' has-error' : '').' '.$extraClasses.'">';
         });
 
 

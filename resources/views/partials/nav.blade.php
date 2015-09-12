@@ -17,6 +17,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if(Auth::check())
+                    <li><a href="/covers/create">Upload Cover</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             {{Auth::user()->email}} <span class="caret"></span>

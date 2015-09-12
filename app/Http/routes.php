@@ -26,6 +26,12 @@ Route::get('templates', function ()
     return view('pages.templates');
 });
 
+Route::get('covers/works', 'CoversController@getWorks');
+Route::get('covers/subcategories', 'CoversController@getSubcategories');
+
+Route::resource('covers', 'CoversController');
+
+
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
