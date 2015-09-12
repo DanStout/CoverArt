@@ -2,25 +2,25 @@
 
 @section('content')
 
-<form method="POST" action="/auth/login">
-    {!! csrf_field() !!}
+{!! Form::model(['url' => 'auth/login']) !!}
 
-    <div>
-        Email
-        <input type="email" name="email" value="{{ old('email') }}">
+    {!! Form::openGroup('email', $errors) !!}
+        {!! Form::label('email', 'Email') !!}
+        {!! Form::email('email', null, ['class' => 'form-control']) !!}
+    {!! Form::closeGroup('email', $errors) !!}
+
+    {!! Form::openGroup('password', $errors) !!}
+        {!! Form::label('password', 'Password') !!}
+        {!! Form::password('password', ['class' => 'form-control'] ) !!}
+    {!! Form::closeGroup('password', $errors ) !!}
+
+    <div class="form-group">
+        {!! Form::label('remember', 'Keep me logged in') !!}
+        {!! Form::checkbox('remember') !!}
     </div>
 
-    <div>
-        Password
-        <input type="password" name="password" id="password">
+    <div class="form-group">
+        {!! Form::submit('Login', ['class' => 'btn btn-primary']) !!}
     </div>
-
-    <div>
-        <input type="checkbox" name="remember"> Remember Me
-    </div>
-
-    <div>
-        <button type="submit">Login</button>
-    </div>
-</form>
+{!! Form::close() !!}
 @endsection

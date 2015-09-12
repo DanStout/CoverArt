@@ -1,32 +1,26 @@
 @extends('main')
 
-
 @section('content')
-<form method="POST" action="/auth/register">
-    {!! csrf_field() !!}
+{!! Form::model(['url' => 'auth/register']) !!}
 
-    <div>
-        Name
-        <input type="text" name="name" value="{{ old('name') }}">
+    {!! Form::openGroup('email', $errors) !!}
+        {!! Form::label('email', 'Email') !!}
+        {!! Form::email('email', null, ['class' => 'form-control']) !!}
+    {!! Form::closeGroup('email', $errors) !!}
+
+    {!! Form::openGroup('password', $errors) !!}
+        {!! Form::label('password', 'Password') !!}
+        {!! Form::password('password', ['class' => 'form-control']) !!}
+    {!! Form::closeGroup('password', $errors) !!}
+
+    {!! Form::openGroup('password_confirmation', $errors) !!}
+        {!! Form::label('password_confirmation', 'Confirm Password') !!}
+        {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
+    {!! Form::closeGroup('password_confirmation', $errors) !!}
+
+    <div class="form-group">
+        <button class="btn btn-primary">Register</button>
     </div>
 
-    <div>
-        Email
-        <input type="email" name="email" value="{{ old('email') }}">
-    </div>
-
-    <div>
-        Password
-        <input type="password" name="password">
-    </div>
-
-    <div>
-        Confirm Password
-        <input type="password" name="password_confirmation">
-    </div>
-
-    <div>
-        <button type="submit">Register</button>
-    </div>
-</form>
+{!! Form::close() !!}
 @endsection

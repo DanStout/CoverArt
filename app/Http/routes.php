@@ -11,10 +11,20 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function ()
+{
     return view('home');
 });
 
+Route::get('about', function ()
+{
+    return view('pages.about');
+});
+
+Route::get('templates', function ()
+{
+    return view('pages.templates');
+});
 
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
