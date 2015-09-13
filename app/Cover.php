@@ -6,12 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cover extends Model
 {
-    protected $fillable = ['description', 'img_path', 'work_id'];
+    protected $fillable = ['title', 'description', 'img_path'];
 
-    public function work()
+    public function user()
     {
-        return $this->belongsTo('Coverart\Work');
+        return $this->belongsTo('Coverart\User');
     }
-
 }
-
