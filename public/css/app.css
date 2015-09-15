@@ -1,0 +1,11 @@
+label[required]:after {
+  content: " *";
+  color: red; }
+
+body {
+  background: #f0f0f0; }
+
+.container.content {
+  background: white; }
+
+/*# sourceMappingURL=app.css.map */

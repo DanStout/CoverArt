@@ -1,2 +1,15 @@
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+label[required]:after
+{
+  content:" *";
+  color:red;
+}
 
+body
+{
+  background:rgb(240, 240, 240);
+}
+
+.container.content
+{
+  background:white;
+}

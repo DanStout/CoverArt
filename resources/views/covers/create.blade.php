@@ -4,19 +4,11 @@
 
     <h1>Upload a new cover</h1>
 
-    {!! Form::model($cover = new Coverart\Cover(), ['url' => 'covers', 'files' => true]) !!}
+    {!! Form::model($cover = new Coverart\Cover(), ['route' => 'covers.store', 'files' => true, 'class' => 'dropzone', 'id' => 'cover-create-form']) !!}
 
-        {!! Form::openGroup('title', $errors) !!}
-            {!! Form::label('title', 'Title') !!}
-            {!! Form::text('title', null, ['class' => 'form-control']) !!}
-        {!! Form::closeGroup('title', $errors) !!}
+        @include('covers.form')
 
-        {!! Form::openGroup('description', $errors) !!}
-            {!! Form::label('description', 'Description') !!}
-            {!! Form::textarea('description', null, ['class' => 'form-control']) !!}
-        {!! Form::closeGroup('description', $errors) !!}
-
-        {!! Form::openGroup('cover', $errors) !!}
+        {!! Form::openGroup('cover', $errors, 'fallback') !!}
             {!! Form::label('cover', 'Cover Image') !!}
             {!! Form::file('cover', ['required']) !!}
         {!! Form::closeGroup('cover', $errors) !!}

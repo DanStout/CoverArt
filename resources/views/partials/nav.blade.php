@@ -17,19 +17,19 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if(Auth::check())
-                    <li><a href="/covers/create">Upload Cover</a></li>
+                    <li>{!! Html::linkRoute('covers.create', 'Upload Cover') !!}</li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            {{Auth::user()->email}} <span class="caret"></span>
+                            {{Auth::user()->name}} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Profile</a></li>
-                            <li><a href="/auth/logout">Logout</a></li>
+                            <li>{!! Html::linkRoute('profiles.show', 'Profile', [Auth::user()->id]) !!}</li>
+                            <li>{!! Html::linkRoute('auth.logout', 'Logout') !!}</li>
                         </ul>
                     </li>
                 @else
-                    <li><a href="/auth/login">Login</a></li>
-                    <li><a href="/auth/register">Register</a></li>
+                    <li>{!! Html::linkRoute('auth.login', 'Login') !!}</li>
+                    <li>{!! Html::linkRoute('auth.register', 'Register') !!}</li>
                 @endif
 
             </ul>

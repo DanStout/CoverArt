@@ -17,7 +17,8 @@ class CreateCoversTable extends Migration
             $table->timestamps();
 
             $table->string('title');
-            $table->string('img_path');
+            $table->string('full_img_path');
+            $table->string('preview_img_path');
             $table->text('description')->nullable();
             $table->integer('user_id')->unsigned();
 

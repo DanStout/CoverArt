@@ -19,15 +19,16 @@ class MacroProvider extends ServiceProvider
             return '<div class="form-group'.($errors->has($fieldName) ? ' has-error' : '').' '.$extraClasses.'">';
         });
 
-
-        FormFacade::macro('closeGroup', function($fieldName, $errors)
+        FormFacade::macro('closeGroup', function($fieldName, $errors, $noErrorText = null)
         {
-            $txt = '';
 
             if ($errors->has($fieldName))
-                    $txt = '<div class="help-block">'.$errors->first($fieldName).'</div>';
+                $msg = $errors->first($fieldName);
+            elseif($noErrorText)
+                $msg = $noErrorText;
+            else return '</div>';
 
-            return $txt.'</div>';
+            return '<div class="help-block">'.$msg.'</div></div>';
         });
     }
 

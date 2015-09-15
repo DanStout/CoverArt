@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cover extends Model
 {
-    protected $fillable = ['title', 'description', 'img_path'];
+    protected $fillable = ['title', 'description'];
 
     public function user()
     {

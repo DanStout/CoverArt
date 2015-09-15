@@ -11,14 +11,6 @@
 |
 */
 
-Route::get('test', function(){phpinfo();});
-
-
-Route::get('/', function ()
-{
-    return view('home');
-});
-
 Route::get('about', function ()
 {
     return view('pages.about');
@@ -29,12 +21,25 @@ Route::get('templates', function ()
     return view('pages.templates');
 });
 
-Route::resource('covers', 'CoversController');
+//Covers routes
+Route::get('covers/create', ['as' => 'covers.create', 'uses' => 'CoversController@create']);
+Route::post('covers', ['as' => 'covers.store', 'uses' => 'CoversController@store']);
+Route::get('covers/{covers}', ['as' => 'covers.show', 'uses' => 'CoversController@show']);
+Route::get('/', ['as' => 'covers.index', 'uses' => 'CoversController@index']);
+Route::get('covers/{covers}/edit', ['as' => 'covers.edit', 'uses' => 'CoversController@edit']);
+Route::put('covers/{covers}', ['as' => 'covers.update', 'uses' => 'CoversController@update']);
+Route::delete('covers/{covers}', ['as' => 'covers.destroy', 'uses' => 'CoversController@destroy']);
 
-Route::get('auth/login', 'Auth\AuthController@getLogin');
-Route::post('auth/login', 'Auth\AuthController@postLogin');
-Route::get('auth/logout', 'Auth\AuthController@getLogout');
+//Profile routes
+Route::get('users/{users}', ['as' => 'profiles.show', 'uses' => 'ProfilesController@show']);
+Route::get('users/{users}/edit', ['as' => 'profiles.edit', 'uses' => 'ProfilesController@edit']);
+Route::put('users/{users}', ['as' => 'profiles.update', 'uses' => 'ProfilesController@update']);
+
+//Login routes
+Route::get('auth/login', ['as' => 'auth.login', 'uses' =>'Auth\AuthController@getLogin']);
+Route::post('auth/login', ['as' => 'auth.login', 'uses' => 'Auth\AuthController@postLogin']);
+Route::get('auth/logout', ['as' => 'auth.logout', 'uses' => 'Auth\AuthController@getLogout']);
 
 // Registration routes...
-Route::get('auth/register', 'Auth\AuthController@getRegister');
-Route::post('auth/register', 'Auth\AuthController@postRegister');
+Route::get('auth/register', ['as' => 'auth.register', 'uses' => 'Auth\AuthController@getRegister']);
+Route::post('auth/register', ['as' => 'auth.register', 'uses' => 'Auth\AuthController@postRegister']);

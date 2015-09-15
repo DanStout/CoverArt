@@ -3,7 +3,6 @@
 namespace Coverart\Http\Controllers;
 
 use Coverart\Cover;
-use Coverart\Http\Requests\StoreCoverRequest;
 use Illuminate\Http\Request;
 
 use Coverart\Http\Requests;
@@ -14,102 +13,104 @@ use Imagick;
 
 class CoversController extends Controller
 {
-
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
+    //display all covers
     public function index()
     {
         $covers = Cover::all();
         return view('covers.index', ['covers' => $covers]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
+    //display a single cover
+    public function show(Cover $cover)
+    {
+        return view('covers.show', ['cover' => $cover]);
+    }
+
+    //show form for editing a cover
+    public function edit(Cover $cover)
+    {
+        $this->checkCoverAuth($cover);
+        return view('covers.edit', ['cover' => $cover]);
+    }
+
+    //update a cover
+    public function update(Request $request, Cover $cover)
+    {
+        $this->validate($request, [
+            'title' => 'required|max:100',
+            'description' => 'max:1000'
+        ]);
+
+        $this->checkCoverAuth($cover);
+        $cover->update($request->all());
+        return redirect()->route('covers.index')->with('message', 'Cover updated successfully');
+    }
+
+    //delete a cover
+    public function destroy(Cover $cover)
+    {
+        $this->checkCoverAuth($cover);
+        $cover->delete();
+        return redirect()->route('covers.index')->with('message', 'Cover deleted successfully');
+    }
+
+    //show form for creating a cover
     public function create()
     {
         return view('covers.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  Request  $request
-     * @return Response
-     */
-    public function store(StoreCoverRequest $request)
+    //store a cover
+    public function store(Request $request)
     {
-        $data = $request->all();
-
+        $this->validate($request, [
+            'title' => 'required',
+            'cover' => 'max:10000',
+            'description' => 'max:500'
+        ]);
         $file = $request->file('cover');
-        $newName = Str::random(20).'.'.$file->guessExtension();
-        $file->move('coverImgs/', $newName);
-        $destPath = 'coverImgs/'.$newName;
-        $this->processImg($destPath);
-        $data['img_path'] = $destPath;
-        $cover = Auth::user()->covers()->create($data);
-        return redirect('covers');
+
+        $time = time();
+        $today = date('Y-m-d', $time);
+        $timeStr = date('H-i-s-', $time);
+        $fileName = $timeStr.Str::random(5).'.'.$file->guessExtension();
+
+        $fullDestDir = "coverImgs/full/{$today}";
+        $fullDestPath = "{$fullDestDir}/{$fileName}";
+
+        $previewDestDir = "coverImgs/preview/{$today}";
+        if (!file_exists($previewDestDir))
+            mkdir($previewDestDir, 0777, true);
+        $previewDestPath = "{$previewDestDir}/{$fileName}";
+
+        $file->move($fullDestDir, $fileName);
+        $this->processImg($fullDestPath, $previewDestPath);
+
+        $cover = new Cover($request->all());
+        $cover->full_img_path = $fullDestPath;
+        $cover->preview_img_path = $previewDestPath;
+        $cover->user_id = Auth::id();
+        $cover->save();
+
+        return redirect()->route('covers.index')->with('message', 'Cover uploaded successfully');
     }
 
-    private function processImg($path)
+    //abort if user shouldn't be accessing this cover
+    private function checkCoverAuth($cover)
     {
-        $img = new Imagick($path);
+        if ($cover->user_id !== Auth::user()->id)
+            abort(403);
+    }
+
+    private function processImg($src, $dest)
+    {
+        $img = new Imagick($src);
         $img->resizeImage(200, 200, imagick::FILTER_LANCZOS, 1, true);
-        $img->writeImage('written.jpg');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  int  $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
+        $img->writeImage($dest);
     }
 }
