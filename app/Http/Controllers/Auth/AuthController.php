@@ -49,6 +49,11 @@ class AuthController extends Controller
         ]);
     }
 
+    public function check($email)
+    {
+        return response()->json(['exists' => User::where('email', $email)->exists()]);
+    }
+
     /**
      * Create a new user instance after a valid registration.
      *
@@ -63,4 +68,5 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+
 }

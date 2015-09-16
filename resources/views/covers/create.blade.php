@@ -4,7 +4,7 @@
 
     <h1>Upload a new cover</h1>
 
-    {!! Form::model($cover = new Coverart\Cover(), ['route' => 'covers.store', 'files' => true, 'class' => 'dropzone', 'id' => 'cover-create-form']) !!}
+    {!! Form::model($cover = new Coverart\Cover(), ['route' => 'covers.store', 'files' => true]) !!}
 
         @include('covers.form')
 

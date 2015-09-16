@@ -21,12 +21,11 @@ class MacroProvider extends ServiceProvider
 
         FormFacade::macro('closeGroup', function($fieldName, $errors, $noErrorText = null)
         {
-
+            $msg = '';
             if ($errors->has($fieldName))
                 $msg = $errors->first($fieldName);
             elseif($noErrorText)
                 $msg = $noErrorText;
-            else return '</div>';
 
             return '<div class="help-block">'.$msg.'</div></div>';
         });

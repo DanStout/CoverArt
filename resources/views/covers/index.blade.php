@@ -12,6 +12,7 @@
     .item-container
     {
         text-align:center;
+        vertical-align:middle;
     }
 </style>
 

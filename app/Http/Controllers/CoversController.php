@@ -110,6 +110,7 @@ class CoversController extends Controller
     private function processImg($src, $dest)
     {
         $img = new Imagick($src);
+        $img->distortImage(imagick::DISTORTION_PERSPECTIVE, [], true);
         $img->resizeImage(200, 200, imagick::FILTER_LANCZOS, 1, true);
         $img->writeImage($dest);
     }
