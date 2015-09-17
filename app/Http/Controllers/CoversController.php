@@ -75,7 +75,8 @@ class CoversController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'cover' => 'max:10000',
-            'description' => 'max:1000'
+            'description' => 'max:1000',
+            'platform_id' => 'exists:platforms,id'
         ]);
         $file = $request->file('cover');
 

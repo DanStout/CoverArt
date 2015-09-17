@@ -1,4 +1,5 @@
 @extends('main')
+@section('title', 'Covers')
 
 @section('content')
 <style>

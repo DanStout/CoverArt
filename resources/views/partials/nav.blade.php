@@ -29,7 +29,7 @@
                     </li>
                 @else
                     <li>{!! Html::linkRoute('auth.login', 'Login') !!}</li>
-                    <li>{!! Html::linkRoute('auth.register', 'Register') !!}</li>
+                    <li><p class="navbar-btn">{!! Html::linkRoute('auth.register', 'Register', null, ['class' => 'btn btn-primary']) !!}</p></li>
                 @endif
 
             </ul>

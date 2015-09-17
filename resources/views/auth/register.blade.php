@@ -1,12 +1,19 @@
 @extends('main')
-
+@section('title', 'Register')
 @section('content')
-{!! Form::open(['url' => 'auth/register',  'autocomplete' => 'off']) !!}
-    @include('auth.form')
-    <div class="form-group">
-        <button class="btn btn-primary">Register</button>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h1>Create an account</h1>
+        </div>
+        <div class="panel-body">
+            {!! Form::open(['url' => 'auth/register',  'autocomplete' => 'off']) !!}
+            @include('auth.form')
+            <div class="form-group">
+                <button class="btn btn-primary">Register</button>
+            </div>
+            {!! Form::close() !!}
+        </div>
     </div>
-{!! Form::close() !!}
 @endsection
 
 @section('scripts')

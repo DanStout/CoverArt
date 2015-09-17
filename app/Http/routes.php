@@ -13,8 +13,7 @@
 
 Route::get('about', function ()
 {
-    return storage_path();
-//    return view('pages.about');
+    return view('pages.about');
 });
 
 Route::get('templates', function ()

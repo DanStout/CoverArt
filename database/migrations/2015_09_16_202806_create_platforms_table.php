@@ -43,12 +43,14 @@ class CreatePlatformsTable extends Migration
 
         Schema::table('covers', function (Blueprint $table)
         {
-            $otherId = Db::table('platforms')->select('id')->where('name', 'Other')->first()->id;
-            $table->integer('platform_id')->default($otherId)->unsigned();
+            $otherId = DB::table('platforms')->select('id')->where('name', 'Other')->first()->id;
+            $table->integer('platform_id')->unsigned()->default($otherId);
             $table->foreign('platform_id')
                 ->references('id')
-                ->on('platforms');
+                ->on('users');
+
         });
+
     }
 
     /**
@@ -58,7 +60,7 @@ class CreatePlatformsTable extends Migration
      */
     public function down()
     {
-        Schema::table('covers', function (Blueprint $table)
+        Schema::table('covers', function(Blueprint $table)
         {
             $table->dropForeign('covers_platform_id_foreign');
             $table->dropColumn('platform_id');

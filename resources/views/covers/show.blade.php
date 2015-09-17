@@ -1,4 +1,5 @@
 @extends('main')
+@section('title', $cover->title)
 
 @section('content')
     <style>

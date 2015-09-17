@@ -1,4 +1,5 @@
 @extends('main')
+@section('title', 'Templates')
 
 @section('content')
     <h1>Templates</h1>
