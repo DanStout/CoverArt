@@ -17,7 +17,6 @@
     <p>Platform: {{$cover->platform->name}}</p>
     <p>Created at: {{$cover->created_at}}</p>
     {!! Html::linkAsset($cover->full_img_path, 'View Printable Version', ['target' => '_blank']) !!}
-    {{var_dump($cover   )}}
 @if(Auth::check() && $cover->user_id === Auth::id())
     {!! Form::open(['route' => ['covers.destroy', $cover->id], 'method' => 'delete', 'class' => 'form-inline']) !!}
         {!! Html::linkRoute('covers.edit', 'Edit Cover', $cover->id, ['class' => 'btn btn-info']) !!}

@@ -8,7 +8,7 @@ class Cover extends Model
 {
     protected $fillable = ['title', 'description', 'platform_id'];
 
-    protected $casts = ['id' => 'integer'];
+    protected $casts = ['id' => 'integer', 'user_id' => 'integer', 'platform_id' => 'integer'];
 
     public function user()
     {
