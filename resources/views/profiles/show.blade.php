@@ -11,6 +11,7 @@
         <dd>{{$user->created_at}}</dd>
     </dl>
 
+    {{var_dump($user->id)}}
     @if(Auth::id() === $user->id)
         {!! Html::linkRoute('profiles.edit', 'Edit your profile', [$user->id]) !!}
     @endif

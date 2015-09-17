@@ -24,10 +24,19 @@ class ProfilesController extends Controller
         return view('profiles.edit', ['user' => $user]);
     }
 
-    public function update(User $user)
+    public function update(Request $request, User $user)
     {
         $this->checkAuth($user);
+        dd($request->all());
+        $this->validate($request, [
+            'display_name' => 'max:50',
+            'email' => 'email|max:255|unique:users',
+            'password' => 'required_with:password_confirmation|confirmed|min:6',
+        ]);
 
+        $user->update($request->all());
+
+        return redirect()->route('profiles.show', [$user->id])->with('message', 'Profile updated');
     }
 
     private function checkAuth(User $user)
