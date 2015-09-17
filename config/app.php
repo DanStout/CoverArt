@@ -147,6 +147,7 @@ return [
         Coverart\Providers\EventServiceProvider::class,
         Coverart\Providers\RouteServiceProvider::class,
         Coverart\Providers\MacroProvider::class,
+        Coverart\Providers\ViewComposerProvider::class,
 
     ],
 

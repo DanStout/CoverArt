@@ -1,15 +1,20 @@
-label[required]:after
-{
-  content:" *";
-  color:red;
+@import 'gly-spin';
+
+label[required]:after {
+  content: " *";
+  color: red;
 }
 
-body
-{
-  background:rgb(240, 240, 240);
+body {
+  background: rgb(240, 240, 240);
 }
 
-.container.content
-{
-  background:white;
+img {
+  max-width: 100%;
 }
+
+.container h1 {
+  text-align: center;
+}
+
+

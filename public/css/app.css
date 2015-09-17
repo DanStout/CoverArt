@@ -1,3 +1,21 @@
+.gly-spin {
+  -webkit-animation: spin 2s infinite linear;
+  animation: spin 2s infinite linear; }
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(359deg); } }
+
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg); } }
+
 label[required]:after {
   content: " *";
   color: red; }
@@ -5,7 +23,10 @@ label[required]:after {
 body {
   background: #f0f0f0; }
 
-.container.content {
-  background: white; }
+img {
+  max-width: 100%; }
+
+.container h1 {
+  text-align: center; }
 
 /*# sourceMappingURL=app.css.map */
