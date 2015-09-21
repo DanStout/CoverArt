@@ -3,6 +3,7 @@
 use Coverart\Cover;
 use Illuminate\Support\Str;
 use Imagick;
+use Log;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class CoverImageService
@@ -33,17 +34,25 @@ class CoverImageService
         $previewLargePath = $previewDestBasePath.'-large.png';
         $previewSmallPath = $previewDestBasePath.'-small.png';
 
-
-
-        $boxPath = storage_path($cover->platform->template_path);
-        $overlayPath = storage_path($cover->platform->overlay_path);
+        $boxPath = storage_path($cover->platform->box_trim_path);
+        $overlayPath = storage_path($cover->platform->box_overlay_path);
 
         $preview = $this->GeneratePreview($fullDestPath, $boxPath, $overlayPath);
 
-        $preview->writeImage($previewLargePath);
 
+        /*
+         * There are some seriously strange things going on with ImageMagick's handling of color profiles/spaces.
+         * With no additional changes, RGB images which didn't have color would be converted to grayscale
+         * when they were resized, which means they would often drastically lose color (Gray BG becoming black)
+         * You can prevent that by calling transformimagecolorspace(Imagick::COLORSPACE_RGB) (Note that SRGB would not
+         * work, for some reason) but then it would only seem to be handled correctly by web browsers - Photoshop or
+         * Windows Explorer would still view it as grayscale. The solution ended up being prepending PNG32 to the filename,
+         * which has the added benefit of greatly reducing the filesize.
+         */
+
+        $preview->writeImage('PNG32:'.$previewLargePath);
         $preview->resizeImage(300, 0, Imagick::FILTER_CATROM, 1);
-        $preview->writeImage($previewSmallPath);
+        $preview->writeImage('PNG32:'.$previewSmallPath);
 
         $cover->full_img_path = $fullDestPath;
         $cover->small_preview_img_path = $previewSmallPath;
@@ -71,8 +80,6 @@ class CoverImageService
 
         $img->setImageFormat('png');
         $img->setImageVirtualPixelMethod(Imagick::VIRTUALPIXELMETHOD_TRANSPARENT);
-        $w = $img->getImageWidth();
-        $h = $img->getImageHeight();
 
         $spine = clone $img;
         $spine->cropImage(41, 538, 382, 0);

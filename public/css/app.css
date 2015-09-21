@@ -21,12 +21,25 @@ label[required]:after {
   color: red; }
 
 body {
-  background: #f0f0f0; }
+  background: #FFF; }
 
 img {
   max-width: 100%; }
 
 .container h1 {
+  text-align: center; }
+
+.item {
+  width: 310px;
+  display: inline-block;
+  text-align: center;
+  background: #f3f3f3; }
+
+.item-container {
+  text-align: center;
+  vertical-align: middle; }
+
+.pagination-container {
   text-align: center; }
 
 /*# sourceMappingURL=app.css.map */

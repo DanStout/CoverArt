@@ -11,16 +11,10 @@
 |
 */
 
-Route::get('about', function ()
-{
-    return view('pages.about');
-});
+//If you're getting 403 forbidden, check if that route is also a file/directory in the public folder!
 
-Route::get('templates', function ()
-{
-    return view('pages.templates');
-});
-
+Route::get('templates', ['as' => 'templates.index', 'uses' => 'TemplatesController@index']);
+Route::get('templates/{template_id}/download', ['as' => 'templates.download', 'uses' => 'TemplatesController@download']);
 
 //Covers routes
 Route::get('covers/create', ['as' => 'covers.create', 'uses' => 'CoversController@create']);

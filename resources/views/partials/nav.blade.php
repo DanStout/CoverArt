@@ -11,9 +11,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/about">About</a></li>
-                <li><a href="/templates">Templates</a></li>
-
+                <li>{!! Html::linkRoute('templates.index', 'Templates') !!}</li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if(Auth::check())

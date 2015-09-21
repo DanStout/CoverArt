@@ -6,7 +6,7 @@ label[required]:after {
 }
 
 body {
-  background: rgb(240, 240, 240);
+  background: #FFF;
 }
 
 img {
@@ -17,4 +17,18 @@ img {
   text-align: center;
 }
 
+.item {
+  width: 310px;
+  display: inline-block;
+  text-align: center;
+  background: #f3f3f3;
+}
 
+.item-container {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.pagination-container {
+  text-align: center;
+}

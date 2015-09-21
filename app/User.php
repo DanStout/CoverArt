@@ -2,6 +2,7 @@
 
 namespace Coverart;
 
+use Auth;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -49,4 +50,8 @@ class User extends Model implements AuthenticatableContract,
         return $this->display_name ?: $this->email;
     }
 
+    public function isCurrent()
+    {
+        return Auth::check() && Auth::id() === $this->id;
+    }
 }

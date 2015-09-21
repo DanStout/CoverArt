@@ -25,7 +25,7 @@ class CoversController extends Controller
     //display all covers
     public function index()
     {
-        $covers = Cover::with('platform')->orderBy('created_at', 'desc')->get();
+        $covers = Cover::with('platform')->orderBy('created_at', 'desc')->paginate(15);
         return view('covers.index', ['covers' => $covers]);
     }
 
@@ -74,7 +74,7 @@ class CoversController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'cover' => 'max:10000',
+            'cover' => 'image|max:10000',
             'description' => 'max:1000',
             'platform_id' => 'exists:platforms,id'
         ]);
