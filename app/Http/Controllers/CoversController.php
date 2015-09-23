@@ -25,7 +25,9 @@ class CoversController extends Controller
     //display all covers
     public function index()
     {
-        $covers = Cover::with('platform')->orderBy('created_at', 'desc')->paginate(15);
+        $coverQuery = Cover::with('platform');
+        $coverQuery->orderBy('created_at', 'desc');
+        $covers = $coverQuery->paginate(15);
         return view('covers.index', ['covers' => $covers]);
     }
 

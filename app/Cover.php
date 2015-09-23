@@ -2,6 +2,7 @@
 
 namespace Coverart;
 
+use File;
 use Illuminate\Database\Eloquent\Model;
 
 class Cover extends Model
@@ -18,5 +19,15 @@ class Cover extends Model
     public function platform()
     {
         return $this->belongsTo('Coverart\Platform');
+    }
+
+    public function delete()
+    {
+        $fullImg = $this->attributes['full_img_path'];
+        $smallPreview = $this->attributes['small_preview_img_path'];
+        $largePreview = $this->attributes['large_preview_img_path'];
+
+        File::delete([$fullImg, $smallPreview, $largePreview]);
+        return parent::delete();
     }
 }
