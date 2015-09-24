@@ -16,6 +16,12 @@
     -webkit-transform: rotate(359deg);
     transform: rotate(359deg); } }
 
+html {
+  box-sizing: border-box; }
+
+*, *:before, *:after {
+  box-sizing: inherit; }
+
 label[required]:after {
   content: " *";
   color: red; }
@@ -34,6 +40,15 @@ img {
   display: inline-block;
   text-align: center;
   background: #f3f3f3; }
+
+.item img {
+  border-radius: 5px;
+  border: 1px solid white;
+  background: rgba(0, 0, 0, 0.05); }
+
+.item img:hover {
+  box-shadow: inset 0 0 5px 1px rgba(17, 44, 72, 0.53);
+  border-radius: 5px; }
 
 .item-container {
   text-align: center;

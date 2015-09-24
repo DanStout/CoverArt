@@ -2,7 +2,10 @@
 
 namespace Coverart\Providers;
 
+use Carbon\Carbon;
 use Collective\Html\FormFacade;
+use Form;
+use Html;
 use Illuminate\Support\ServiceProvider;
 
 class MacroProvider extends ServiceProvider
@@ -14,12 +17,16 @@ class MacroProvider extends ServiceProvider
      */
     public function boot()
     {
-        FormFacade::macro('openGroup', function ($fieldName, $errors, $extraClasses = '')
+        Html::macro('time', function(Carbon $time){
+            return '<time title="'.$time.'">'.$time->diffForHumans().'</span>';
+        });
+
+        Form::macro('openGroup', function ($fieldName, $errors, $extraClasses = '')
         {
             return '<div class="form-group'.($errors->has($fieldName) ? ' has-error' : '').' '.$extraClasses.'">';
         });
 
-        FormFacade::macro('closeGroup', function($fieldName, $errors, $noErrorText = null)
+        Form::macro('closeGroup', function($fieldName, $errors, $noErrorText = null)
         {
             $msg = '';
             if ($errors->has($fieldName))

@@ -6,7 +6,6 @@ use Coverart\Cover;
 use Coverart\Platform;
 use Coverart\Services\CoverImageService;
 use Illuminate\Http\Request;
-
 use Coverart\Http\Requests;
 use Coverart\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -25,8 +24,12 @@ class CoversController extends Controller
     //display all covers
     public function index()
     {
-        $coverQuery = Cover::with('platform');
-        $coverQuery->orderBy('created_at', 'desc');
+        $coverQuery = Cover::with('platform', 'user')->orderBy('created_at', 'desc');
+//        if (\Request::has('user_id'))
+//        {
+//            $uid = \Request::input('user_id');
+//            $coverQuery->where('user_id', $uid);
+//        }
         $covers = $coverQuery->paginate(15);
         return view('covers.index', ['covers' => $covers]);
     }

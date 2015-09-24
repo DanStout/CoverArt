@@ -6,3 +6,5 @@ Homestead.json
 /.idea
 storage/db.sqlite
 coverImgs/
+.phpstorm.meta.php
+_ide_helper.php

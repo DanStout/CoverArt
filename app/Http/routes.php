@@ -19,16 +19,16 @@ Route::get('templates/{template_id}/download', ['as' => 'templates.download', 'u
 //Covers routes
 Route::get('covers/create', ['as' => 'covers.create', 'uses' => 'CoversController@create']);
 Route::post('covers', ['as' => 'covers.store', 'uses' => 'CoversController@store']);
-Route::get('covers/{covers}', ['as' => 'covers.show', 'uses' => 'CoversController@show']);
+Route::get('covers/{cover_id}', ['as' => 'covers.show', 'uses' => 'CoversController@show']);
 Route::get('/', ['as' => 'covers.index', 'uses' => 'CoversController@index']);
-Route::get('covers/{covers}/edit', ['as' => 'covers.edit', 'uses' => 'CoversController@edit']);
-Route::put('covers/{covers}', ['as' => 'covers.update', 'uses' => 'CoversController@update']);
-Route::delete('covers/{covers}', ['as' => 'covers.destroy', 'uses' => 'CoversController@destroy']);
+Route::get('covers/{cover_id}/edit', ['as' => 'covers.edit', 'uses' => 'CoversController@edit']);
+Route::put('covers/{cover_id}', ['as' => 'covers.update', 'uses' => 'CoversController@update']);
+Route::delete('covers/{cover_id}', ['as' => 'covers.destroy', 'uses' => 'CoversController@destroy']);
 
 //Profile routes
-Route::get('users/{users}', ['as' => 'profiles.show', 'uses' => 'ProfilesController@show']);
-Route::get('users/{users}/edit', ['as' => 'profiles.edit', 'uses' => 'ProfilesController@edit']);
-Route::put('users/{users}', ['as' => 'profiles.update', 'uses' => 'ProfilesController@update']);
+Route::get('users/{user_id}', ['as' => 'profiles.show', 'uses' => 'ProfilesController@show']);
+Route::get('users/{user_id}/edit', ['as' => 'profiles.edit', 'uses' => 'ProfilesController@edit']);
+Route::put('users/{user_id}', ['as' => 'profiles.update', 'uses' => 'ProfilesController@update']);
 
 //Login routes
 Route::get('auth/check/{email}', ['as' => 'auth.check', 'uses' => 'Auth\AuthController@check']);

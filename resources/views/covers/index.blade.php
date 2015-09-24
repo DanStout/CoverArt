@@ -19,21 +19,5 @@
 @endif
 
 <h1>Covers</h1>
-    <div class="item-container">
-        @foreach($covers as $cover)
-            <div class="thumbnail item">
-                    <a href={!! route('covers.show', [$cover->id]) !!}>
-                        {!! Html::image($cover->small_preview_img_path, "Preview of {$cover->title}") !!}
-                        <h4>{{$cover->title}}</h4>
-                    </a>
-                    <p>Uploaded by {!! Html::linkRoute('profiles.show', $cover->user->name, $cover->user->id) !!}
-                    <p>Platform: {{$cover->platform->name}}</p>
-
-            </div>
-        @endforeach
-    </div>
-    <div class="pagination-container">
-        {!! $covers->render() !!}
-    </div>
-
+    @include('covers.list')
 @endsection
