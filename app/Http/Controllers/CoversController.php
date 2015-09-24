@@ -11,6 +11,7 @@ use Coverart\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Imagick;
+use Log;
 
 class CoversController extends Controller
 {
@@ -25,11 +26,6 @@ class CoversController extends Controller
     public function index()
     {
         $coverQuery = Cover::with('platform', 'user')->orderBy('created_at', 'desc');
-//        if (\Request::has('user_id'))
-//        {
-//            $uid = \Request::input('user_id');
-//            $coverQuery->where('user_id', $uid);
-//        }
         $covers = $coverQuery->paginate(15);
         return view('covers.index', ['covers' => $covers]);
     }
@@ -50,14 +46,24 @@ class CoversController extends Controller
     //update a cover
     public function update(Request $request, Cover $cover)
     {
+        $this->checkCoverAuth($cover);
+
         $this->validate($request, [
             'title' => 'required|max:100',
-            'description' => 'max:1000'
+            'description' => 'max:1000',
+            'platform_id' => 'exists:platforms,id'
         ]);
 
-        $this->checkCoverAuth($cover);
+        $platformDidChange = $request->input('platform_id') != $cover->platform_id;
         $cover->update($request->all());
-        return redirect()->route('covers.index')->with('message', 'Cover updated successfully');
+        if ($platformDidChange)
+        {
+            Log::debug('Generating previews');
+            $this->covImgServ->GenerateAndSavePreviews($cover);
+        }
+        $msg = 'Cover updated successfully.';
+        if ($platformDidChange) $msg .= ' You may need to refresh your browser before the updated preview image is displayed.';
+        return redirect()->route('covers.index')->with('message', $msg);
     }
 
     //delete a cover
@@ -78,7 +84,7 @@ class CoversController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title' => 'required',
+            'title' => 'required|max:100',
             'cover' => 'image|max:10000',
             'description' => 'max:1000',
             'platform_id' => 'exists:platforms,id'
@@ -96,7 +102,7 @@ class CoversController extends Controller
     }
 
     //abort if user shouldn't be accessing this cover
-    private function checkCoverAuth($cover)
+    private function checkCoverAuth(Cover $cover)
     {
         if ($cover->user_id !== Auth::user()->id)
             abort(403);

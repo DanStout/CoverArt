@@ -17,6 +17,7 @@ class CoverImageService
      */
     public function ProcessCover(Cover $cover, UploadedFile $file)
     {
+        //setup files and directories
         $time = time();
         $today = date('Y-m-d', $time);
         $timeStr = date('H-i-s-', $time);
@@ -34,11 +35,26 @@ class CoverImageService
         $previewLargePath = $previewDestBasePath.'-large.png';
         $previewSmallPath = $previewDestBasePath.'-small.png';
 
+        $cover->full_img_path = $fullDestPath;
+        $cover->small_preview_img_path = $previewSmallPath;
+        $cover->large_preview_img_path = $previewLargePath;
+
+        $this->GenerateAndSavePreviews($cover);
+    }
+
+    /**
+     * Regenerates and saves the previews for this cover, assuming all relevant directories exist.
+     * @param Cover $cover
+     */
+    public function GenerateAndSavePreviews(Cover $cover)
+    {
         $boxPath = storage_path($cover->platform->box_trim_path);
         $overlayPath = storage_path($cover->platform->box_overlay_path);
+        $fullDestPath = $cover->full_img_path;
+        $previewLargePath = $cover->large_preview_img_path;
+        $previewSmallPath = $cover->small_preview_img_path;
 
         $preview = $this->GeneratePreview($fullDestPath, $boxPath, $overlayPath);
-
 
         /*
          * There are some seriously strange things going on with ImageMagick's handling of color profiles/spaces.
@@ -53,19 +69,15 @@ class CoverImageService
         $preview->writeImage('PNG32:'.$previewLargePath);
         $preview->resizeImage(300, 0, Imagick::FILTER_CATROM, 1);
         $preview->writeImage('PNG32:'.$previewSmallPath);
-
-        $cover->full_img_path = $fullDestPath;
-        $cover->small_preview_img_path = $previewSmallPath;
-        $cover->large_preview_img_path = $previewLargePath;
     }
 
     /**
      * Generate a 3D preview of a cover
      *
-     * @param $coverPath - The path to the full version of the cover
-     * @param $boxPath
-     * @param $overlayPath
-     * @return Imagick - The full preview size
+     * @param $coverPath string The path to the full version of the cover
+     * @param $boxPath string The path to the box trim image
+     * @param $overlayPath string The path to the overlay for this box size
+     * @return Imagick The full preview
      */
     public function GeneratePreview($coverPath, $boxPath, $overlayPath)
     {

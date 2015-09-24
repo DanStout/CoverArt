@@ -11,23 +11,23 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li>{!! Html::linkRoute('templates.index', 'Templates') !!}</li>
+                {!! Html::linkRouteActiveLi('templates.index', 'Templates') !!}
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if(Auth::check())
-                    <li>{!! Html::linkRoute('covers.create', 'Upload Cover') !!}</li>
+                    {!! Html::linkRouteActiveLi('covers.create', 'Upload Cover') !!}
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             {{Auth::user()->name}} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>{!! Html::linkRoute('profiles.show', 'Profile', [Auth::user()->id]) !!}</li>
+                            {!! Html::linkRouteActiveLi('profiles.show', 'Profile', [Auth::id()]) !!}
                             <li>{!! Html::linkRoute('auth.logout', 'Logout') !!}</li>
                         </ul>
                     </li>
                 @else
-                    <li>{!! Html::linkRoute('auth.login', 'Login') !!}</li>
-                    <li><p class="navbar-btn">{!! Html::linkRoute('auth.register', 'Register', null, ['class' => 'btn btn-primary']) !!}</p></li>
+                    {!! Html::linkRouteActiveLi('auth.login', 'Login') !!}
+                    <li {{Route::currentRouteName() == 'auth.register' ? 'class="active"' : ''}}><p class="navbar-btn">{!! Html::linkRoute('auth.register', 'Register', null, ['class' => 'btn btn-primary']) !!}</p></li>
                 @endif
 
             </ul>
