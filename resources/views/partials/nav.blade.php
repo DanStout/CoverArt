@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">CoverArt.com</a>
+            {!! Html::linkRoute('covers.index', 'CoverArt', [], ['class' => 'navbar-brand']) !!}
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
